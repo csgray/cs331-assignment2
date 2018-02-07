@@ -29,9 +29,22 @@ end
 
 -- collatz
 -- Takes an integer.
--- Returns one or more integers that are entries in the Collatz sequences starting at 'k'.
-function pa2.collatz(k)
-  return k
+-- Yields one or more integers that are entries in the Collatz sequences starting at 'k'.
+function pa2.collatz(int)
+  local results = { int }
+  
+  while int ~= 1 do
+    if int % 2 == 1 then
+      int = 3 * int + 1 
+    else
+      int = int / 2
+    end
+    table.insert(results, int)
+  end
+  
+  for key, value in ipairs(results) do
+    coroutine.yield(results[key])
+  end
 end
 
 return pa2
