@@ -21,8 +21,10 @@ end
 -- Returns a string which is a concatenation of as many copies of 's' as possible,
 -- without exceeding the length exceeding the integer 'i'.
 -- Returns an empty string if 'i' is less than the length of 's'.
-function pa2.concatMax(s, i)
-  return ""
+function pa2.concatMax(inputString, maxLength)
+  local repetitions = math.floor( maxLength / inputString:len() )
+  local outputString = inputString:rep(repetitions)
+  return outputString
 end
 
 -- collatz
