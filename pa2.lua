@@ -9,8 +9,11 @@ local pa2 = {}
 -- Takes a function 'f' and an array 't'.
 -- Function 'f' is a one-parameter function that will accept any item in array 't'.
 -- Returns a table containing f(it) for each item 'it' in array 't'.
-function pa2.mapArray(f, t)
-  return {}
+function pa2.mapArray(func, array)
+  for key, value in ipairs(array) do
+    array[key] = func(value)
+  end
+  return array
 end
 
 -- concatMax
