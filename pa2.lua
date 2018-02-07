@@ -1,0 +1,32 @@
+-- pa2.lua
+-- Corey Gray
+-- February 06, 2018
+-- pa2 module for CS331: Assignment 2B
+
+local pa2 = {}
+
+-- mapArray
+-- Takes a function 'f' and an array 't'.
+-- Function 'f' is a one-parameter function that will accept any item in array 't'.
+-- Returns a table containing f(it) for each item 'it' in array 't'.
+function pa2.mapArray(f, t)
+  return {}
+end
+
+-- concatMax
+-- Takes a string 's' and an integer 'i'.
+-- Returns a string which is a concatenation of as many copies of 's' as possible,
+-- without exceeding the length exceeding the integer 'i'.
+-- Returns an empty string if 'i' is less than the length of 's'.
+function pa2.concatMax(s, i)
+  return ""
+end
+
+-- collatz
+-- Takes an integer.
+-- Returns one or more integers that are entries in the Collatz sequences starting at 'k'.
+function pa2.collatz(k)
+  return k
+end
+
+return pa2
