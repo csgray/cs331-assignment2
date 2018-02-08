@@ -1,14 +1,15 @@
 -- pa2.lua
 -- Corey Gray
--- February 06, 2018
--- pa2 module for CS331: Assignment 2B
+-- 07 February 2018
+-- Source for pa2 module for CS 331: Assignment 2B
 
 local pa2 = {}
 
--- mapArray
--- Takes a function 'f' and an array 't'.
--- Function 'f' is a one-parameter function that will accept any item in array 't'.
--- Returns a table containing f(it) for each item 'it' in array 't'.
+-- function mapArray
+-- Returns a table containing "func(item)" for each item in "array".
+-- Preconditions:
+--      "func" is a one-parameter function that will accept any item in table "array".
+--      "array" is a valid table object.
 function pa2.mapArray(func, array)
   for key, value in ipairs(array) do
     array[key] = func(value)
@@ -16,35 +17,55 @@ function pa2.mapArray(func, array)
   return array
 end
 
--- concatMax
--- Takes a string 's' and an integer 'i'.
--- Returns a string which is a concatenation of as many copies of 's' as possible,
--- without exceeding the length exceeding the integer 'i'.
--- Returns an empty string if 'i' is less than the length of 's'.
+-- function concatMax
+-- Returns a string which is a concatenation of as many copies of "inputString" as possible,
+-- without exceeding the length exceeding "maxLength".
+-- Returns an empty string if "maxLength" is less than the length of "inputString".
+-- Preconditions:
+--      "inputString" is a valid string object.
+--      "maxLength" is a valid number object with no decimal portion.
 function pa2.concatMax(inputString, maxLength)
   local repetitions = math.floor( maxLength / inputString:len() )
   local outputString = inputString:rep(repetitions)
   return outputString
 end
 
--- collatz
--- Takes an integer.
--- Yields one or more integers that are entries in the Collatz sequences starting at 'k'.
-function pa2.collatz(int)
-  local results = { int }
-  
-  while int ~= 1 do
-    if int % 2 == 1 then
-      int = 3 * int + 1 
-    else
-      int = int / 2
+-- function calculateNextCollatz(integer)
+-- Returns the number following the given number in the Collatz sequence.
+-- Preconditions:
+--      "integer" is a valid, positive number object with no decimal portion.
+local function calculateNextCollatz(integer)
+  if integer % 2 == 1 then
+    integer = 3 * integer + 1 
+  else
+    integer = integer / 2
+  end
+  return integer
+end
+
+-- coroutine yieldArray
+-- Yields the value of each item in the table.
+-- Preconditions:
+--      "array" is a table object of key, value pairs with keys that are consecutive integers.
+local function yieldArray(array)
+    for key, value in ipairs(array) do
+      coroutine.yield(array[key])
     end
-    table.insert(results, int)
+end
+ 
+-- coroutine collatz
+-- Yields one or more numbers that are entries in the Collatz sequences starting at "integer".
+-- Preconditions:
+--      "integer" is a valid, nonnegative number object with no decimal portion.
+function pa2.collatz(integer)
+  local results = { integer }
+  
+  while integer ~= 1 do
+    integer = calculateNextCollatz(integer)
+    table.insert(results, integer)
   end
   
-  for key, value in ipairs(results) do
-    coroutine.yield(results[key])
-  end
+  yieldArray(results)
 end
 
 return pa2
